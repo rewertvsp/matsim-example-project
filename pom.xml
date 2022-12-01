@@ -91,6 +91,11 @@
 		<!--some contribs:-->
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
+			<artifactId>parking</artifactId>
+			<version>${matsim.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.matsim.contrib</groupId>
 			<artifactId>minibus</artifactId>
 			<version>${matsim.version}</version>
 		</dependency>
