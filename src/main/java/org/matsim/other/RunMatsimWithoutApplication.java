@@ -16,8 +16,53 @@
  *   See also COPYING, LICENSE and WARRANTY file                           *
  *                                                                         *
  * *********************************************************************** */
+package org.matsim.other;
+
+import org.matsim.api.core.v01.Scenario;
+import org.matsim.core.config.Config;
+import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.controler.Controler;
+import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
+import org.matsim.core.scenario.ScenarioUtils;
+
 /**
  * @author nagel
  *
  */
-package org.matsim.gui;
+public class RunMatsimWithoutApplication {
+
+	public static void main(String[] args) {
+
+		Config config;
+		if ( args==null || args.length==0 || args[0]==null ){
+			config = ConfigUtils.loadConfig( "scenarios/equil/config-2026.xml" );
+		} else {
+			config = ConfigUtils.loadConfig( args );
+		}
+
+		config.controller().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+
+        // possibly modify config here
+
+		// ---
+		
+		Scenario scenario = ScenarioUtils.loadScenario(config) ;
+
+		// possibly modify scenario here
+		
+		// ---
+		
+		Controler controler = new Controler( scenario ) ;
+		
+		// possibly modify controler here
+
+//		controler.addOverridingModule( new OTFVisLiveModule() ) ;
+
+//		controler.addOverridingModule( new SimWrapperModule() );
+		
+		// ---
+		
+		controler.run();
+	}
+	
+}
