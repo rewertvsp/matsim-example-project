@@ -7,7 +7,7 @@
 
 		<!-- Options: stable build based on pull requests (e.g. 16.0-PR2778), weekly (e.g. 15.0-2023w01) or official (e.g. 14.0) releases -->
 		<!--		<version>16.0-PR2509</version>-->
-		<version>2025.0</version>
+		<version>2026.0</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -25,7 +25,7 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.release>21</maven.compiler.release>
+		<maven.compiler.release>25</maven.compiler.release>
 	</properties>
 
 	<repositories>
@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.10.2</version>
+			<version>6.0.3</version>
 			<scope>test</scope>
 		</dependency>
 
