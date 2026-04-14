@@ -29,6 +29,7 @@ import org.matsim.core.events.EventsUtils;
 import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.utils.io.IOUtils;
 import org.matsim.examples.ExamplesUtils;
+import org.matsim.other.RunMatsimWithoutApplication;
 import org.matsim.testcases.MatsimTestUtils;
 import org.matsim.utils.eventsfilecomparison.ComparisonResult;
 
@@ -41,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author nagel
  *
  */
-public class RunMatsimTest {
+public class RunMatsimWithoutApplicationTest {
 
 	@RegisterExtension
 	public MatsimTestUtils utils = new MatsimTestUtils() ;
@@ -54,16 +55,16 @@ public class RunMatsimTest {
 			final URL baseUrl = ExamplesUtils.getTestScenarioURL( "equil" );
 			final String fullUrl = IOUtils.extendUrl( baseUrl, "config.xml" ).toString();
 			String [] args = {fullUrl,
-				  "--config:controler.outputDirectory", utils.getOutputDirectory(),
-				  "--config:controler.lastIteration", "1"
+				  "--config:controller.outputDirectory", utils.getOutputDirectory(),
+				  "--config:controller.lastIteration", "1"
 			} ;
-			RunMatsim.main( args ) ;
+			RunMatsimWithoutApplication.main( args ) ;
 			{
 				Population expected = PopulationUtils.createPopulation( ConfigUtils.createConfig() ) ;
-				PopulationUtils.readPopulation( expected, utils.getInputDirectory() + "/output_plans.xml.gz" );
+				PopulationUtils.readPopulation( expected, utils.getInputDirectory() + "/output_plans.xml.zst" );
 
 				Population actual = PopulationUtils.createPopulation( ConfigUtils.createConfig() ) ;
-				PopulationUtils.readPopulation( actual, utils.getOutputDirectory() + "/output_plans.xml.gz" );
+				PopulationUtils.readPopulation( actual, utils.getOutputDirectory() + "/output_plans.xml.zst" );
 
 				for ( Id<Person> personId : expected.getPersons().keySet()) {
 					double scoreReference = expected.getPersons().get(personId).getSelectedPlan().getScore();
@@ -78,8 +79,8 @@ public class RunMatsimTest {
 				// differ by JDK (e.g. oracle vs. ...).   So not testing this any more for the time being.  kai, jul'23
 			}
 			{
-				String expected = utils.getInputDirectory() + "/output_events.xml.gz" ;
-				String actual = utils.getOutputDirectory() + "/output_events.xml.gz" ;
+				String expected = utils.getInputDirectory() + "/output_events.xml.zst" ;
+				String actual = utils.getOutputDirectory() + "/output_events.xml.zst" ;
 				ComparisonResult result = EventsUtils.compareEventsFiles( expected, actual );
 				assertEquals( ComparisonResult.FILES_ARE_EQUAL, result );
 			}
